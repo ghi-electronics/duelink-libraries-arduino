@@ -150,14 +150,27 @@ public:
 
         if (m_link.available()) {
             int c = m_link.read();
-            if (c >= 0 && c <= 127) {
-                return c;
+            
+            if (c == 254) {
+                delay(1); //wait 1ms for sure 
+
+                m_link.requestFrom(m_i2cAddress, 1, 1);
+                
+                if (m_link.available()) {
+                    c = m_link.read();
+                    
+                    if (c == 1)
+                        return 255;
+                    else if (c == 2)
+                        return 254;                    
+                }
+                
             }
-            else {
-                return 255;
-            }
+            
+            return c; //return 255 mean no data, other mean data
         }
-        return 255;
+        
+        return 255; // no response, error bus...., just return 255 so mark no data 
     }
     
 
