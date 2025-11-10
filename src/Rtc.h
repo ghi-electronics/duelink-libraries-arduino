@@ -55,7 +55,26 @@ public:
             return read;
 
         return 0;
-    }   
+    }
+
+    bool Alarm(const uint8_t* data, int count)
+    {
+        char cmd[32];
+
+        //declare b9 array
+        sprintf(cmd, "dim b9[%d]", count);
+        m_pTransport->WriteCommand(cmd);
+        DUELinkTransport::Response result = m_pTransport->ReadResponse();
+        
+        //write data to b9
+        int written = m_pStream->WriteBytes("b9", data, count);
+
+        //write b9 to rtc        
+        m_pTransport->WriteCommand("RtcA(b9)");
+        result = m_pTransport->ReadResponse();   
+
+        return result.success;
+    }
 
 private:
     DUELinkTransport *m_pTransport = NULL;

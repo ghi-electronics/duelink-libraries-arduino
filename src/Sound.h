@@ -65,6 +65,39 @@ public:
         DUELinkTransport::Response result = m_pTransport->ReadResponse();     
         return result.success;
     }
+    
+    bool Wave(int pin, const uint8_t *notes, int offset, int count, int freq, int delay_us) {
+#ifdef ARDUINO
+    String s;
+#else
+    std::string s;
+#endif        
+
+        
+        char cmd[32];
+
+        //declare b9 array
+        sprintf(cmd, "dim b9[%d]", count);
+        m_pTransport->WriteCommand(cmd);
+        DUELinkTransport::Response result = m_pTransport->ReadResponse();
+        
+        //write notes to b9
+        int written = m_pStream->WriteBytes("b9", notes, count);
+        
+        sprintf(cmd, "wave(%d,b9,%d,%d,%d,%d)", pin,offset,count,freq,delay_us);               
+        m_pTransport->WriteCommand(cmd);
+        result = m_pTransport->ReadResponse();
+        
+        return result.success;
+    }
+        
+    bool Sweep(int pin,int freq_start, int freq_end, int vol_start, int vol_end, int duration) {
+        char cmd[32];
+        sprintf(cmd, "Sweep(%d,%d,%d,%d,%d,%d)", pin,freq_start,freq_end,vol_start,vol_end,duration);
+        m_pTransport->WriteCommand(cmd);
+        DUELinkTransport::Response result = m_pTransport->ReadResponse();     
+        return result.success;
+    }
 
 private:
     DUELinkTransport *m_pTransport = NULL;

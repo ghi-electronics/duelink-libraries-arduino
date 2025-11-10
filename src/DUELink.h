@@ -25,7 +25,6 @@
 #include "Rtc.h"
 #include "Servo.h"
 #include "Spi.h"
-#include "Touch.h"
 #include "Uart.h"
 
 
@@ -37,7 +36,7 @@ public:
     Sound(transport,Stream), System(transport), Distance(transport),
     DMX(transport,Stream), FileSystem(transport,Stream),Humidity(transport), Temperature(transport ),
     Infrared(transport), Otp(transport,Stream), Pulse(transport),Rtc(transport,Stream),Servo(transport),
-    Spi(transport,Stream),Touch(transport),Uart(transport,Stream)
+    Spi(transport,Stream),Uart(transport,Stream)
     {
         m_pTransport = &transport;
     }
@@ -64,8 +63,7 @@ public:
     PulseController Pulse;
     RtcController Rtc;
     ServoController Servo;
-    SpiController Spi;
-    TouchController Touch;
+    SpiController Spi;    
     UartController Uart;
 
     void SetTimeout(int timeout_ms);

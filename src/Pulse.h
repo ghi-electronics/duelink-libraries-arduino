@@ -15,10 +15,10 @@ public:
         m_pTransport = &transport;
     }
 
-    int Read(int pin, int state, int timeout_ms)
+    int Read(int pin, int charge_time, int charge_state, int timeout)
     {
         char cmd[32];
-        sprintf(cmd, "PulseIn(%d,%d,%d)", pin, state,timeout_ms);
+        sprintf(cmd, "PulseIn(%d,%d,%d,%d)", pin, charge_time,charge_state, timeout);
         m_pTransport->WriteCommand(cmd);
         DUELinkTransport::Response result = m_pTransport->ReadResponse();
         
