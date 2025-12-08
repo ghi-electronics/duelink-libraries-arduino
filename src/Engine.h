@@ -68,7 +68,9 @@ public:
         if (!result.success)
             return false;
         
-        m_pTransport->WriteRawData((const uint8_t*)data, 0 , strlen(script));
+        m_pTransport->WriteRawData((const uint8_t*)data, 0 , strlen(script) + 1);
+        
+        delete[] data;
         result = m_pTransport->ReadResponse();
         
         return result.success;

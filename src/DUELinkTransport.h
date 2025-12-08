@@ -259,6 +259,16 @@ public:
                 break; // \n found, 
 
             }
+            else if (total_receviced == 1 && (data == '>' || data == '&')) { // region, new, new all command does not return \r\n, only >, &
+                delay(2); //wait 2ms for sure
+                
+                dump = ReadByte();
+
+                if (dump == 255) {
+                    str_arr[0] = 0;
+                    return {.response = str_arr, .success = true};
+                }
+            }
 
             startms = millis(); // reset timeout when new data come
 
@@ -475,6 +485,14 @@ public:
 
                     break; // \n found, 
 
+                }
+                else if (total_receviced == 1 && (data == '>' || data == '&')) { // region, new, new all command does not return \r\n, only >, &
+                    delay(2); //wait 2ms for sure
+                                        
+                    if (m_link.available()== 0) {
+                        str_arr[0] = 0;
+                        return {.response = str_arr, .success = true};
+                    }
                 }
 
                 startms = millis(); // reset timeout when new data come
