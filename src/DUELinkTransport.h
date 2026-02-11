@@ -108,11 +108,15 @@ public:
     }
     
     virtual void sync() {
-    
+        delay(100);
+        
         beginTransmission();
         write("\n");
         endTransmission();
 
+        delay(400);
+        
+        WriteByte(0x1B);
         delay(400);
 
         WriteCommand("sel(1)"); //"sel(1)": always return \r\n> no matter Asio or not
@@ -338,12 +342,14 @@ public:
     }
     
     virtual void sync() {
-    
+        delay(100);
         beginTransmission();
         write("\n");
         endTransmission();
-
-        delay(300);
+        delay(400);
+        
+        WriteByte(0x1B);
+        delay(400);
 
         WriteCommand("sel(1)"); //"sel(1)": always return \r\n> no matter Asio or not
         
