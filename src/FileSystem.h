@@ -32,7 +32,7 @@ public:
         return ParseReturn();
     }
 
-    int UnMount(int type, int cs, int baud, int max_handle) {
+    int UnMount() {
      
         m_pTransport->WriteCommand("FsUnMnt()");
 
