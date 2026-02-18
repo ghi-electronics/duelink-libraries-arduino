@@ -18,7 +18,7 @@ public:
       return result.success;
     }
 
-    bool Stop() {
+    bool StopAll() {
       uint8_t rawdata[1] = {27};
 
       m_pTransport->DiscardInBuffer();

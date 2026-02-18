@@ -116,8 +116,8 @@ public:
 
         delay(400);
         
-        WriteByte(0x1B);
-        delay(400);
+        //WriteByte(0x1B);
+        //delay(400);
 
         WriteCommand("sel(1)"); //"sel(1)": always return \r\n> no matter Asio or not
         
@@ -348,8 +348,8 @@ public:
         endTransmission();
         delay(400);
         
-        WriteByte(0x1B);
-        delay(400);
+        //WriteByte(0x1B);
+        //delay(400);
 
         WriteCommand("sel(1)"); //"sel(1)": always return \r\n> no matter Asio or not
         
